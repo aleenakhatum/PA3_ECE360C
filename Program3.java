@@ -103,7 +103,14 @@ public class Program3 {
                     int right = sum(PFS, k + 1, j); //find sum to the right of k
 
                     int collected = Math.min(left, right); //we keep the minimum of the sides (enemy destroys higher side)
-                    int remain = (left < right) ? DP[i][k] : DP[k + 1][j];
+                    int remain = 0;
+                    if (left < right) {
+                        remain = DP[i][k];
+                    } else if (left > right) {
+                        remain = DP[k+1][j];
+                    } else {
+                        remain = Math.min(DP[i][k], DP[k+1][j]);
+                    }
 
                     best = Math.max(best, collected + remain);
                 }
