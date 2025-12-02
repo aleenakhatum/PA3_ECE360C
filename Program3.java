@@ -78,8 +78,10 @@ public class Program3 {
                     int mid = (low + high) / 2;
 
                     //Find if sum of left side of mid is greater than or less than right side of mid
-                    int v1 = compare(PFS, DP, i, j, mid);
-                    int v2 = compare(PFS, DP, i, j, mid+1);
+                    //int v1 = compare(PFS, DP, i, j, mid);
+                    //int v2 = compare(PFS, DP, i, j, mid+1);
+                    int v1 = Math.min(sum(PFS, i, mid) + DP[i][mid], sum(PFS, mid + 1, j) + DP[mid + 1][j]);
+                    int v2 = Math.min(sum(PFS, i, mid + 1) + DP[i][mid + 1], sum(PFS, mid + 2, j) + DP[mid + 2][j]);
 
                     //Left < Right -> go right until left >= right
                     if (v1 < v2) {
@@ -102,22 +104,25 @@ public class Program3 {
                     int left  = sum(PFS, i, k); //find sum to the left of k
                     int right = sum(PFS, k + 1, j); //find sum to the right of k
 
-                    int collected = Math.min(left, right); //we keep the minimum of the sides (enemy destroys higher side)
-                    int remain = 0;
-                    if (left < right) {
-                        remain = DP[i][k];
-                    } else if (left > right) {
-                        remain = DP[k+1][j];
-                    } else {
-                        remain = Math.min(DP[i][k], DP[k+1][j]);
-                    }
 
-                    best = Math.max(best, collected + remain);
+                    int coinsThisMove = Math.min(left + DP[i][k], right + DP[k + 1][j]); //we keep the minimum of the sides (enemy destroys higher side)
+                    best = Math.max(best, coinsThisMove);
                 }
 
                 DP[i][j] = best;
             }
         }
+
+        // Print DP table with exactly 1 space between numbers
+        for (int i = 0; i < cities.length; i++) {
+            for (int j = 0; j < cities.length; j++) {
+                System.out.print(DP[i][j]);
+                if (j != cities.length - 1) System.out.print(" "); // add 1 space between numbers, not after last
+            }
+            System.out.println(); // new line at end of row
+        }
+
+
 
         return DP[0][cities.length - 1];
     }
