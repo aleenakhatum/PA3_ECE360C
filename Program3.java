@@ -114,6 +114,7 @@ public class Program3 {
         }
 
         // Print DP table with exactly 1 space between numbers
+        /*
         for (int i = 0; i < cities.length; i++) {
             for (int j = 0; j < cities.length; j++) {
                 System.out.print(DP[i][j]);
@@ -121,6 +122,7 @@ public class Program3 {
             }
             System.out.println(); // new line at end of row
         }
+        */
 
 
 
